@@ -100,7 +100,7 @@ class ChordRing:
                 if current == self.first_node:
                     break
 
-# Example usage of the Chord system
+# Example usage of the Chord systems
 if __name__ == "__main__":
     chord_ring = ChordRing()
 
