@@ -9,7 +9,7 @@ class ChordNode:
 
     @staticmethod
     def hash_function(key):
-        # Função de hash para calcular o hash de uma chave usando SHA-1 e limitando o resultado a 256 bits.
+        # Função de hash para calcular o hash de uma chave usando SHA-1 e limitando o resultado a 256 bits. errado
         return int(hashlib.sha1(key.encode()).hexdigest(), 16) % 256
 
     def add_resource(self, key, value):
