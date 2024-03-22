@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cliente Web</title>
+</head>
+<body>
+    <input type="text" id="urlInput" placeholder="Digite a URL" size="50">
+    <button onclick="fetchFile()">Buscar Arquivo</button>
+    <div id="content"></div>
+
+    <script>
+        function fetchFile() {
+            const url = document.getElementById('urlInput').value;
+            if (!url.startsWith('http://')) {
+                alert('URL inválida. Deve começar com http://');
+                return;
+            }
+
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`Erro ${response.status}: ${response.statusText}`);
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById('content').textContent = data;
+                })
+                .catch(error => {
+                    document.getElementById('content').textContent = error;
+                });
+        }
+    </script>
+</body>
+</html>
