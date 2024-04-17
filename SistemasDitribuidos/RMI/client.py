@@ -3,6 +3,7 @@ import threading
 
 class ChatClient(object):
     def __init__(self):
+        # Conectar ao servidor usando o nome registrado
         self.chat_server = Pyro4.core.Proxy('PYRONAME:server')
         self.abort = 0
 

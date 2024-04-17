@@ -1,7 +1,6 @@
 import Pyro4
 
 @Pyro4.expose
-@Pyro4.behavior(instance_mode="single")
 class ChatServer(object):
     def __init__(self):
         self.users = []
@@ -38,13 +37,15 @@ class ChatServer(object):
             except Pyro4.errors.ConnectionClosedError:
                 if(nick, callback) in self.users:
                     self.users.remove((nick, callback))
-                    print('Removido por erro %s %s' % (n, callback))
+                    print('Removido por erro %s %s' % (nick, callback))
 
 def main():
-    daemon = Pyro4.Daemon()
-    ns = Pyro4.locateNS()
+    # Configurando para aceitar conexões na rede
+    daemon = Pyro4.Daemon(host="192.168.0.211")
+    ns = Pyro4.locateNS(host="192.168.0.211")
     uri = daemon.register(ChatServer)
     ns.register("server", uri)
+    print("Ready. Object uri =", uri)
     print('Chat server começou')
     daemon.requestLoop()
 
