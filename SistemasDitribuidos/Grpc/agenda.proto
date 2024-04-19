@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package agenda;
+
+import "google/protobuf/timestamp.proto";
+
+message Pessoa {
+    int32 id = 1;
+    string nome = 2;
+    string email = 3;
+    repeated NumeroTelefone telefones = 4;
+    google.protobuf.Timestamp last_updated = 5;
+    bool encontrado = 6;  // Adiciona um campo para indicar se a pessoa foi encontrada
+}
+
+message NumeroTelefone {
+    string numero = 1;
+    enum TipoTelefone {
+        CELULAR = 0;
+        RESIDENCIAL = 1;
+        TRABALHO = 2;
+    }
+    TipoTelefone tipo = 2;
+}
+
+message Resposta {
+    string resultado = 1;
+}
+
+service Agenda {
+    rpc adicionar(Pessoa) returns (Resposta);
+    rpc buscar(Pessoa) returns (Pessoa);
+}
