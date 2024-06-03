@@ -1,0 +1,10 @@
+FROM ubuntu:latest
+
+RUN apt-get update && \
+  apt-get install -y iproute2 iptables traceroute iputils-ping net-tools curl telnet
+
+COPY firewall-caliandra.sh /usr/local/bin/firewall.sh
+RUN chmod +x /usr/local/bin/firewall.sh
+
+CMD ["/bin/bash", "-c", "/usr/local/bin/firewall.sh && tail -f /dev/null"]
+

@@ -1,0 +1,123 @@
+version: '3.8'
+
+services:
+  caliandra:
+    build:
+      context: .
+      dockerfile: Dockerfile.caliandra
+    container_name: caliandra
+    privileged: true
+    networks:
+      external:
+        ipv4_address: 192.0.1.2
+      dmz:
+        ipv4_address: 192.0.2.2
+
+  caiman:
+    build:
+      context: .
+      dockerfile: Dockerfile.caiman
+    container_name: caiman
+    privileged: true
+    networks:
+      dmz:
+        ipv4_address: 192.0.2.3
+      internal:
+        ipv4_address: 192.0.3.3
+
+  interno:
+    build:
+      context: .
+      dockerfile: Dockerfile.interno
+    container_name: interno
+    privileged: true
+    networks:
+      internal:
+        ipv4_address: 192.0.3.4
+
+  externo:
+    build:
+      context: .
+      dockerfile: Dockerfile.externo
+    container_name: externo
+    privileged: true
+    networks:
+      external:
+        ipv4_address: 192.0.1.5
+
+  server-web:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: server-web
+    privileged: true
+    networks:
+      dmz:
+        ipv4_address: 192.0.2.6
+
+  server-dns:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: server-dns
+    privileged: true
+    networks:
+      dmz:
+        ipv4_address: 192.0.2.7
+
+  server-ad:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: server-ad
+    privileged: true
+    networks:
+      dmz:
+        ipv4_address: 192.0.2.8
+
+  server-db:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: server-db
+    privileged: true
+    networks:
+      dmz:
+        ipv4_address: 192.0.2.9
+
+  server-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: server-app
+    privileged: true
+    networks:
+      dmz:
+        ipv4_address: 192.0.2.10
+
+  server-files:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+    container_name: server-files
+    privileged: true
+    networks:
+      dmz:
+        ipv4_address: 192.0.2.11
+
+networks:
+  external:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.0.1.0/24
+  dmz:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.0.2.0/24
+  internal:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.0.3.0/24
