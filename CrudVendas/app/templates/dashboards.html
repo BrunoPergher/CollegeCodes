@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <style>
+        /* Estilos opcionais para melhorar a apresentação */
+        .chart-container {
+            margin: 20px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estatísticas do Dashboard</h1>
+
+    <!-- Gráfico de Vendedores vs. Não Vendedores -->
+    <div class="chart-container">
+        <h2>Vendedores vs. Não Vendedores</h2>
+        <img src="data:image/png;base64,{{ graphic_vendedores }}" alt="Gráfico Vendedores vs. Não Vendedores">
+    </div>
+
+    <!-- Gráfico de Estatísticas de Vendas -->
+    <div class="chart-container">
+        <h2>Estatísticas de Vendas</h2>
+        <img src="data:image/png;base64,{{ graphic_vendas }}" alt="Gráfico Estatísticas de Vendas">
+    </div>
+
+    <!-- Gráfico de Estoque de Produtos -->
+    <div class="chart-container">
+        <h2>Estoque de Produtos</h2>
+        <img src="data:image/png;base64,{{ graphic_estoque }}" alt="Gráfico Estoque de Produtos">
+    </div>
+
+    <!-- Gráfico de Produtos Mais Vendidos -->
+    <div class="chart-container">
+        <h2>Produtos Mais Vendidos</h2>
+        <img src="data:image/png;base64,{{ graphic_produtos_mais_vendidos }}" alt="Gráfico Produtos Mais Vendidos">
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# De externo para server-ad em porta de e-mail (Deveria funcionar)
+docker exec externo telnet 192.0.2.8 465
+docker exec externo telnet 192.0.2.8 587
+
+# De server-app para server-db em 5432 (Deveria funcionar)
+docker exec server-app telnet 192.0.2.9 5432
+
+# De interno para server-db em 5432 (Não deveria funcionar)
+docker exec interno telnet 192.0.2.9 5432
+
+
+docker exec -it server-app telnet 192.0.2.9 5432
+docker exec caliandra iptables -L -v
+docker exec caiman iptables -L -v
+docker exec -it externo ping globo.com
+docker exec -it interno traceroute 192.0.1.5
+interno ping server
+
+docker exec -it externo /usr/local/bin/socket.sh 192.0.2.6 9000 tcp
+docker exec -it server-web /usr/local/bin/socket.sh 9000 tcp
+
+docker exec -it externo /usr/local/bin/socket.sh 192.0.2.6 80 tcp
+docker exec -it interno /usr/local/bin/socket.sh 192.0.2.6 80 tcp
+docker exec -it server-web /usr/local/bin/socket.sh 80 tcp

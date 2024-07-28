@@ -1,0 +1,44 @@
+	syntax = "proto3";
+	package agenda;
+	import "google/protobuf/wrappers.proto";
+
+	message Jogador {
+		int32 id = 1;
+		string nome = 2;
+		int32 pontuacao = 3;
+		string endereco = 4;
+	}
+
+	message Carta {
+		int32 id = 1;
+		string valor = 2;
+		bool ativo=3;
+		bool selecionada = 4;
+	}
+
+	message Jogo{
+		int32 numCartas = 1;
+		int32 numCartasRestantes = 2;
+		repeated Carta cartas = 3;
+		repeated Jogador jogadores = 7;
+		int32 idUltimoJogador = 8;
+		int32 idJogadorAtual = 9;	
+	}
+
+	message Jogada {
+		int32 carta1 = 1;
+		int32 carta2 = 2;
+		int32 idJogador = 3;
+	}
+
+	// Definição da interface do serviço (métodos que poderão ser invocados)
+	service MemoriaServidor {
+		rpc conectar (Jogador) returns (google.protobuf.BoolValue) {} //jogador se conecta ao servidor
+	}
+
+	service MemoriaCliente {
+		rpc informarJogador (Jogo) returns (Jogada) {} //servidor informa a jogada que um jogador fez para os outros servidores
+		rpc receberJogada (Jogo) returns (google.protobuf.BoolValue) {} //servidor informa a jogada que um jogador fez para os outros servidores0
+		rpc informarFimJogo (Jogo) returns (google.protobuf.BoolValue) {} //servidor informa aos jogadores o fim do jogo.
+	}
+	//	

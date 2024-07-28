@@ -1,0 +1,189 @@
+options 
+{
+ static = false; 
+}
+
+PARSER_BEGIN(Trabalho01) 
+package Trabalho01;
+ 
+import java.io.FileInputStream; 
+import java.io.File; 
+import java.io.IOException; 
+public class Trabalho01 {
+ 	public static void main(String args []) throws ParseException {
+	 	try {
+	 		System.out.println("Lendo arquivo fonte...");
+	 		FileInputStream fis = new FileInputStream(new File("..//Trabalho01//src//fonte.txt")); 
+	 		Trabalho01 parser = new Trabalho01(fis); 
+	 		parser.Start();
+	 		System.out.println("Arquivo fonte processado corretamente!");
+		} catch (IOException e) {
+			System.out.println("Falha ao abrir arquivo fonte.");
+	 		System.exit(0);
+	 	}
+	}
+}
+
+PARSER_END(Trabalho01)
+
+SKIP: { " " | "\t" | "\n" | "\r" } // Ignora pular linha, espaços e afins
+
+TOKEN: { <FDL: ";" >} // fim de linha
+
+TOKEN: { <#CARACTERES: ["a"-"z", "A"-"Z"]> | <#NUMEROS: (["0"-"9"])+ | (["0"-"9"])+ "." (["0"-"9"])+ >} //letras e dígitos
+
+TOKEN: { <DECIMAIS: (["0"-"9"])+ "." (["0"-"9"])+>} //  números decimais
+
+TOKEN: {
+<TIPO: (<INT> | <STRING> | <BYTE> | <FLOAT> | <DOUBLE> | <BOOLEAN> | <CHAR>)> | //  tipos primitivos
+<#INT: "int"> |
+<#STRING: "String"> |
+<#BYTE: "byte"> |
+<#FLOAT: "float"> |
+<#DOUBLE: "double"> |
+<#BOOLEAN: "boolean"> |
+<#CHAR: "char">
+}
+
+TOKEN: { <OP_MATEMATICO: ("+" | "-" | "*" | "/")> } // operadores matematicos
+TOKEN: { <OPER_RELACIONAL: (">" | "<" | "==" | "!=")> } // 
+TOKEN: { <INC: (<MAIS>)> | <#MAIS: "++"> } // operador de incremento
+TOKEN: { <DEC: (<MENOS>)> | <#MENOS: "--"> } // operadores de decremento
+TOKEN: { <BOOL: (<TRUE> | <FALSE>)> | <#TRUE: "true"> | <#FALSE: "false"> } // VALUEes booleanos
+TOKEN: { <IGUAL: "="> } // Atribuição  VALUE
+TOKEN: { <FUNCTION: "function"> }
+TOKEN: { <VIRGULA: "," > }
+
+//Controle de chaves e parenteses
+// Prefixo A usado para quando abre C(chave) P(Parentese)
+// Prefixo F usado para quando fecha C(chave) P(Parentese) 
+TOKEN : { < AP: "(" >  }
+TOKEN : { < FP: ")" >  }
+TOKEN: { <AC: "{" > }
+TOKEN: { <FC: "}" > }
+
+//statements
+TOKEN: { <IF: "if"> }
+TOKEN: { <ELSE: "else"> }
+TOKEN: { <ELSEIF: "elseif"> }
+TOKEN: { <SWITCH: "switch"> }
+TOKEN: { <CASE: "case"> }
+TOKEN: { <DOIS_PONTOS: ":" > }
+TOKEN: { <BREAK: "break"> }
+TOKEN: { <WHILE: "while"> }
+TOKEN: { <DO: "do"> }
+
+TOKEN: {
+<COMENTARIO: "//" (~["\n", "\r"])* ("\n" | "\r" | "\r\n" | "")> //comentário de uma linha, termina com pular linha ou retorno
+}
+
+TOKEN: {
+<COMENTARIO_BLOCO: "//*" (~["\n", "\r"])* "*//" > //comentário em bloco, inicia com //* e termina com *//
+}
+
+TOKEN: { <VALUES: <NUMEROS> (<NUMEROS>)* | "\""<CARACTERES> (<CARACTERES> | <NUMEROS> | "_")* "\"" > }
+
+// nome variaveis começando com letras
+TOKEN: { <LITERAIS: <CARACTERES> (<CARACTERES> | <NUMEROS> | "_")* > }
+
+// fim dos tokens
+
+// inicio dos metodos
+void Start(): {} {
+    COMANDOS() <EOF> // end of file
+}
+
+void DECLARAR_VARIAVEL(): {} {
+    <TIPO> <LITERAIS> // declara o tipo e nome baseado nos tokens
+}
+
+void IGUAL_VARIAVEL(): {} {
+    <VALUES> | <DECIMAIS> | <LITERAIS> | <BOOL>
+}
+
+void IDENTIFICADOR(): {} {
+    (DECLARAR_VARIAVEL() (<VIRGULA> (<LITERAIS> | <VIRGULA> <LITERAIS>)+ | <IGUAL> IGUAL_VARIAVEL())* <FDL>)
+}
+
+// comandos que podem ser executados no programa
+void COMANDOS(): {} {
+    (
+        WHILE()| CONDICAO_MATEMATICA()| IDENTIFICADOR()| IF()| <COMENTARIO> | FUNCAO()| DO_WHILE()| SWITCH_CASE()| WRITE()| LEITURA()| TERNARIO()
+    )+
+}
+
+void IF(): {} {
+    <IF> CONDICAO() (<ELSEIF> CONDICAO())* (<ELSE> <AC> COMANDOS() <FC>)*
+    // pode ter varios eles if, mas apenas um if e um elseif
+}
+
+// condição booleana valida
+void CONDICAO(): {} {
+    (
+        <AP> CONDICAO_VALIDA()<FP> <AC> COMANDOS()<FC>
+        // abre parentese condição boolana, fecha parentes abre chaves comandos e fecha chaves
+    )*
+}
+
+//  While
+void WHILE(): {} {
+    <WHILE> <AP> CONDICAO_VALIDA()<FP> ESCOPO()
+}
+
+//  função pode ter um ou mais parametrosd
+void FUNCAO(): {} {
+    <FUNCTION><AP>(PARAMETROS())*<FP>ESCOPO()
+}
+
+// declara parametros utiliza a virgula entre eles, minimo um, mas pode ter varios
+void PARAMETROS(): {} {
+    DECLARAR_VARIAVEL() (<VIRGULA> DECLARAR_VARIAVEL())*
+}
+
+// valida se a condição é valida
+void CONDICAO_VALIDA(): {} {
+    (
+        (<VALUES> | <DECIMAIS> | <LITERAIS>) <OPER_RELACIONAL> (<VALUES> | <DECIMAIS> | <LITERAIS>)
+    )
+}
+
+// Condição Matematica
+void CONDICAO_MATEMATICA(): {} {
+    (
+        <LITERAIS> ((<INC>|<DEC>) | <IGUAL> (<VALUES> | <DECIMAIS> | <LITERAIS>)) (<OP_MATEMATICO> (<VALUES> | <DECIMAIS> | <LITERAIS>))* <FDL>
+    )
+}
+
+// abre chaves e comando entre eleas
+void ESCOPO(): {} {
+    <AC> COMANDOS() <FC>
+}
+
+// do while
+void DO_WHILE():{ } {
+  < DO > ESCOPO()< WHILE > <AP >CONDICAO_VALIDA()< FP >
+}
+
+// switch
+void CASE(): {} {
+    <CASE> ((<VALUES> | <LITERAIS>) <DOIS_PONTOS> COMANDOS() <BREAK> <FDL>)
+}
+
+//  estrutura de um switch-case
+void SWITCH_CASE(): {} {
+    <SWITCH> <AP> <LITERAIS> <FP> <AC> (CASE())* <FC>
+}
+
+void VALUE(): {} {
+    <VALUES> | <LITERAIS> | <BOOL>
+}
+
+//condicional ternário, que recebe uma condição e retorna um VALUE:
+void TERNARIO(): {} { "ifinline " CONDICAO_VALIDA() ": " VALUE() "! " VALUE() < FDL > }
+
+//comando de LEITURA que lê o VALUE para uma variável:
+void LEITURA(): {} { "read " < LITERAIS > < FDL > }
+
+// comando para escrever algo
+void WRITE(): {} { "write " VALUE() < FDL > }
+
