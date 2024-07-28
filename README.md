@@ -1,2 +1,2 @@
 # CollegeCodes
-Codes deloped for college/learning/tests
+Codes Developed for college/learning/tests
