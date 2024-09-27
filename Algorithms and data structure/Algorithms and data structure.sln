@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{B5AFDCD7-4BE9-4A6A-8F62-FE7DFFEBE858}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "main", "Projects\soccer2\main.csproj", "{0ED02B1E-C0F1-4ACB-8F86-64868ACBD974}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0ED02B1E-C0F1-4ACB-8F86-64868ACBD974}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0ED02B1E-C0F1-4ACB-8F86-64868ACBD974}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0ED02B1E-C0F1-4ACB-8F86-64868ACBD974}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0ED02B1E-C0F1-4ACB-8F86-64868ACBD974}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0ED02B1E-C0F1-4ACB-8F86-64868ACBD974} = {B5AFDCD7-4BE9-4A6A-8F62-FE7DFFEBE858}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {AD7E564B-DA80-4441-9F4E-376071761CD7}
+	EndGlobalSection
+EndGlobal
