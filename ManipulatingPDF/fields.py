@@ -13,4 +13,4 @@ def list_pdf_fields(pdf_path):
         print("No form fields found in the PDF.")
 
 # Usage
-list_pdf_fields('avaliacaoempresaeditavel.pdf')
+list_pdf_fields('avaliacao_professor_editavel.pdf')

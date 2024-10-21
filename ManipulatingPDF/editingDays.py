@@ -29,22 +29,20 @@ def fill_pdf_pymupdf(input_pdf_path, output_pdf_path, data_dict):
 data = {
     'nome_estagiario': 'João da Silva',
     'nome_empresa': 'Empresa Exemplo S.A.',
-    'nome_curso': 'Curso Técnico em Informática',
-    'periodo': '2023-10',
-    'nota_interesse': '9',
-    'nota_iniciativa': '8',
-    'nota_cooperacao': '10',
-    'nota_assiduidade': '9',
-    'nota_pontualidade': '8',
-    'nota_disciplina': '9',
-    'nota_sociabilidade': '10',
-    'nota_adaptabilidade': '9',
-    'nota_responsabilidade': '10',
-    'nota_etica': '10',
-    'nota_media': '9.2',
-    'atividades': 'Desenvolvimento de sistemas, manutenção de software e suporte técnico.',
-    'observacoes': 'João demonstrou excelente adaptação ao ambiente de trabalho e boa capacidade de aprendizado.'
+    'nome_mes': 'Outubro 2023',
+    'nome_estagiario2': 'João da Silva',  # Same as nome_estagiario
+    'nome_empresa2': 'Empresa Exemplo S.A.',  # Same as nome_empresa
+    'nome_mes2': 'Outubro 2023',  # Same as nome_mes
+    'observacoes': 'João demonstrou ótima adaptação e desempenho durante o período de estágio.'
 }
 
+# Fill in daily data (1 to 31) with sample times and descriptions
+for day in range(1, 32):
+    day_str = f"{day:02d}"  # Format day as two digits (e.g., "01", "02", ..., "31")
+    data[f'entrada_{day_str}'] = '08:00'  # Sample entry time
+    data[f'saida_{day_str}'] = '17:00'  # Sample exit time
+    data[f'descricao_{day_str}'] = f'Atividades realizadas no dia {day}.'  # Sample description
+    data[f'horas_{day_str}'] = '8'  # Total hours worked
+
 # Usage
-fill_pdf_pymupdf('avaliacaoempresaeditavel.pdf', 'avaliacao_empresa.pdf', data)
+fill_pdf_pymupdf('acompanhamento_estagio_editavel.pdf', 'acompanhamento.pdf', data)

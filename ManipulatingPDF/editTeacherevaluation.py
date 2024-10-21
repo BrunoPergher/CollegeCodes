@@ -29,22 +29,9 @@ def fill_pdf_pymupdf(input_pdf_path, output_pdf_path, data_dict):
 data = {
     'nome_estagiario': 'João da Silva',
     'nome_empresa': 'Empresa Exemplo S.A.',
-    'nome_curso': 'Curso Técnico em Informática',
-    'periodo': '2023-10',
-    'nota_interesse': '9',
-    'nota_iniciativa': '8',
-    'nota_cooperacao': '10',
-    'nota_assiduidade': '9',
-    'nota_pontualidade': '8',
-    'nota_disciplina': '9',
-    'nota_sociabilidade': '10',
-    'nota_adaptabilidade': '9',
-    'nota_responsabilidade': '10',
-    'nota_etica': '10',
-    'nota_media': '9.2',
-    'atividades': 'Desenvolvimento de sistemas, manutenção de software e suporte técnico.',
-    'observacoes': 'João demonstrou excelente adaptação ao ambiente de trabalho e boa capacidade de aprendizado.'
+    'nota': '9.5',
+    'comentarios': 'João demonstrou excelente desempenho e dedicação durante o período de estágio. João demonstrou excelente desempenho e dedicação durante o período de estágio. João demonstrou excelente desempenho e dedicação durante o período de estágio.'
 }
 
 # Usage
-fill_pdf_pymupdf('avaliacaoempresaeditavel.pdf', 'avaliacao_empresa.pdf', data)
+fill_pdf_pymupdf('avaliacao_professor_editavel.pdf', 'avaliacaoprofessor.pdf', data)
