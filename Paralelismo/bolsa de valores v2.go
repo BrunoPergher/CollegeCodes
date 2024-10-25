@@ -27,11 +27,12 @@ type Stock struct {
 }
 
 var (
-	queueStock        = sync.Map{} // Cooperação entre goroutines, garantindo que todas terminem seu processamento antes de prosseguir. coordenando a sincronização sem causar condições de corrida.
-	queueInput        = make(chan Order, 1000)
-	queueOutput       = make(chan Order, 1000)
-	orderID     int64 = 0
+	queueStock                 = sync.Map{} // Cooperação entre goroutines, garantindo que todas terminem seu processamento antes de prosseguir. coordenando a sincronização sem causar condições de corrida.
+	queueInput                 = make(chan Order, 1000)
+	queueOutput                = make(chan Order, 1000)
+	orderID     int64          = 0
 	wgProcess   sync.WaitGroup // WaitGroup para sincronizar as goroutines de processamento
+)
 
 func main() {
 	fmt.Printf("MERCADO ABRINDO, RECUPERANDO AS ORDENS ANTERIORES 'PENDENTE'S.\n\n\n")
