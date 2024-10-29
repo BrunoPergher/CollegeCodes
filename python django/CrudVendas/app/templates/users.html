@@ -1,0 +1,62 @@
+<!-- user_dashboard.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard de Usuários</title>
+    <style>
+        .styled-table {
+            border-collapse: collapse;
+            margin: 25px 0;
+            font-size: 0.9em;
+            font-family: sans-serif;
+            min-width: 400px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .styled-table thead tr {
+            background-color: #009879;
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .styled-table th,
+        .styled-table td {
+            padding: 12px 15px;
+        }
+
+        .styled-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .styled-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .styled-table tbody tr:last-of-type {
+            border-bottom: 2px solid #009879;
+        }
+
+        .styled-table tbody tr.active-row {
+            font-weight: bold;
+            color: #009879;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dashboard de Usuários</h1>
+    <table class="styled-table">
+        <tr>
+            <th>Nome</th>
+            <th>Idade</th>
+            <th>Vendedor</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.nome }}</td>
+                <td>{{ user.idade }}</td>
+                <td>{% if user.isVendedor %}Sim{% else %}Não{% endif %}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
